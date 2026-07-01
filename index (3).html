@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haymanot Degu — Research & Data Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a56;
+    --ink-faint: #9a9a94;
+    --bg: #f7f5f0;
+    --bg-card: #ffffff;
+    --accent: #1d6b4e;
+    --accent-light: #e8f5ef;
+    --accent2: #c4622d;
+    --border: rgba(0,0,0,0.09);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.1rem; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--ink-muted); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+  }
+
+  .hero-label {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-label::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.05rem; color: var(--ink-muted); line-height: 1.8;
+    max-width: 42ch; margin-bottom: 2.5rem;
+  }
+
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; border-radius: 100px;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #fff; border: 1.5px solid var(--accent); }
+  .btn-primary:hover { background: #155a3e; border-color: #155a3e; transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  /* HERO VISUAL SIDE */
+  .hero-visual {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card-stack { position: relative; width: 340px; height: 380px; }
+
+  .stat-card {
+    position: absolute;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+  .stat-card.main {
+    top: 0; left: 0; right: 0;
+    padding: 2rem;
+  }
+  .stat-card.main .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 1.3rem; color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .stat-card.main h3 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: 0.25rem; }
+  .stat-card.main p { font-size: 0.85rem; color: var(--ink-muted); }
+
+  .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .tag {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em;
+    padding: 0.3rem 0.75rem; border-radius: 100px;
+    background: var(--accent-light); color: var(--accent);
+  }
+  .tag.orange { background: #fdf0e8; color: var(--accent2); }
+
+  .stat-card.metric {
+    bottom: 60px; right: -20px;
+    width: 160px;
+    text-align: center;
+  }
+  .stat-card.metric .num { font-family: var(--serif); font-size: 2rem; color: var(--accent); }
+  .stat-card.metric .label { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.2rem; }
+
+  .stat-card.tools {
+    bottom: 0; left: 10px;
+    width: 200px;
+  }
+  .stat-card.tools .tool-label { font-size: 0.7rem; font-weight: 500; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+  .tools-list { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tool-chip {
+    font-size: 0.7rem; font-weight: 500;
+    padding: 0.2rem 0.5rem; border-radius: 4px;
+    background: #f0ede8; color: var(--ink-muted);
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.02em; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-desc { color: var(--ink-muted); max-width: 54ch; font-size: 1rem; margin-bottom: 3.5rem; }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+  .skill-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1rem;
+  }
+  .skill-icon.green { background: var(--accent-light); }
+  .skill-icon.orange { background: #fdf0e8; }
+  .skill-icon.blue { background: #e8f0fb; }
+  .skill-card h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .skill-card p { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* EXPERIENCE */
+  .exp-section { background: var(--bg-card); }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 0.4rem; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .exp-item { position: relative; padding-bottom: 3rem; }
+  .exp-item::before {
+    content: ''; position: absolute; left: -2rem; top: 0.4rem;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg-card);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+  .exp-meta {
+    display: flex; gap: 0.75rem; align-items: center;
+    margin-bottom: 0.5rem; flex-wrap: wrap;
+  }
+  .exp-org { font-size: 0.75rem; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .exp-period { font-size: 0.75rem; color: var(--ink-faint); }
+  .exp-item h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.75rem; }
+  .exp-bullets { list-style: none; padding: 0; }
+  .exp-bullets li {
+    font-size: 0.9rem; color: var(--ink-muted); padding: 0.3rem 0 0.3rem 1.25rem;
+    position: relative; line-height: 1.6;
+  }
+  .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+  }
+  .project-card.coming::before { background: #c4c4be; }
+  .project-num { font-family: var(--serif); font-size: 3rem; color: var(--accent-light); font-weight: 400; line-height: 1; margin-bottom: 0.75rem; }
+  .project-card.coming .project-num { color: #ebebeb; }
+  .project-card h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .project-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .project-tag {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.04em;
+    padding: 0.2rem 0.6rem; border-radius: 4px;
+    background: #f0ede8; color: var(--ink-muted);
+  }
+  .coming-badge {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.25rem 0.75rem; border-radius: 100px;
+    background: #f0ede8; color: var(--ink-faint);
+    margin-bottom: 0.75rem;
+  }
+
+  /* CERTIFICATIONS */
+  .cert-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .cert-item {
+    display: flex; align-items: center; gap: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+  }
+  .cert-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
+  .cert-info h4 { font-size: 0.95rem; font-weight: 500; }
+  .cert-info p { font-size: 0.8rem; color: var(--ink-muted); }
+
+  /* CONTACT */
+  .contact-section { background: var(--ink); color: #fff; }
+  .contact-section h2 { color: #fff; }
+  .contact-section .section-desc { color: rgba(255,255,255,0.6); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    text-decoration: none; color: #fff;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .contact-item:hover { background: rgba(255,255,255,0.1); }
+  .contact-item span { opacity: 0.5; font-size: 0.85rem; }
+
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 3rem; }
+    .hero-visual { display: none; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Haymanot Degu</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-label">Available for freelance work</div>
+    <h1>Research &amp; Data<br><em>Specialist</em></h1>
+    <p class="hero-sub">
+      Economics graduate with hands-on experience in survey digitisation, market research, data cleaning, and field data operations across international development projects in Ethiopia and beyond.
+    </p>
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary">View my work →</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card-stack">
+      <div class="stat-card main">
+        <div class="avatar">HD</div>
+        <h3>Haymanot Degu</h3>
+        <p>Research & Data Specialist · KoboToolbox · SPSS · Excel</p>
+        <div class="tag-row">
+          <span class="tag">SPSS</span>
+          <span class="tag">STATA</span>
+          <span class="tag orange">ODK</span>
+          <span class="tag orange">SurveyCTO</span>
+        </div>
+      </div>
+      <div class="stat-card metric">
+        <div class="num">150+</div>
+        <div class="label">Interviews conducted</div>
+      </div>
+      <div class="stat-card tools">
+        <div class="tool-label">Tools</div>
+        <div class="tools-list">
+          <span class="tool-chip">SPSS</span>
+          <span class="tool-chip">STATA</span>
+          <span class="tool-chip">ODK</span>
+          <span class="tool-chip">Excel</span>
+          <span class="tool-chip">Canva</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-eyebrow">What I do</div>
+    <h2>Skills & Services</h2>
+    <p class="section-desc">
+      From survey design to statistical analysis, I bring a full range of data capabilities to every project.
+    </p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon green">📊</div>
+        <h4>Data Analysis</h4>
+        <p>Statistical analysis using SPSS and STATA. Descriptive stats, regression, and data interpretation for research and business decisions.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon green">🗂️</div>
+        <h4>Data Entry & Cleaning</h4>
+        <p>Accurate data entry, validation, and cleaning using ODK, SurveyCTO, Excel, and Google Sheets. Zero-error mindset.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon orange">📋</div>
+        <h4>Survey Design & Research</h4>
+        <p>End-to-end survey design, field data collection, and qualitative interviewing in English and Amharic.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon blue">📣</div>
+        <h4>Communications & Reporting</h4>
+        <p>Writing reports, press releases, and data summaries. Social media content with a proven record of driving engagement growth.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon orange">📱</div>
+        <h4>Questionnaire Digitisation</h4>
+        <p>Converting paper surveys into digital forms using KoboToolbox and SurveyCTO. Includes skip logic, validation rules, and mobile-ready deployment for field teams.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon orange">🌍</div>
+        <h4>Field Research</h4>
+        <p>On-the-ground data collection experience with USAID-backed initiatives. Bilingual interviewing (English / Amharic).</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon green">📈</div>
+        <h4>Digital Marketing Analytics</h4>
+        <p>Grew social media engagement by 85%. Google-certified in digital marketing fundamentals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="exp-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Background</div>
+    <h2>Work Experience</h2>
+    <p class="section-desc">A track record of delivering results across data, communications, and field research.</p>
+
+    <div class="timeline">
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-org">Hello Tractor</span>
+          <span class="exp-period">June 2025 – Present · Full-time</span>
+        </div>
+        <h3>Customer Support Associate</h3>
+        <ul class="exp-bullets">
+          <li>Managed end-to-end farmer retention and booking agent operations across Oromia, Amhara, SNNPR, and Central Ethiopia.</li>
+          <li>Drove 184,402 acres booked, 191,883 acres paired, and 130,718 acres completed in 2026.</li>
+          <li>Exceeded monthly booked-acres targets in 3 of 5 months, including 277% of target in March 2026.</li>
+          <li>Maintained 99% booking verification rate consistently across multiple weeks.</li>
+          <li>Onboarded and activated 115+ booking agents across Ethiopia.</li>
+          <li>Created an Amharic video onboarding guide for booking agents, reducing language-barrier support calls.</li>
+          <li>Managed high-volume customer support — 500+ documented interactions in May 2026 alone.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-org">African Women in Water and Climate</span>
+          <span class="exp-period">April 2023 – June 2025 · Internship</span>
+        </div>
+        <h3>Communications Officer</h3>
+        <ul class="exp-bullets">
+          <li>Grew social media follower engagement by 85% through targeted content strategy.</li>
+          <li>Created posts, images, and videos promoting the association's mission and activities.</li>
+          <li>Drafted press releases and supported event promotion to increase brand awareness.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-org">Green Professional Services</span>
+          <span class="exp-period">April – May 2021 · Contractual</span>
+        </div>
+        <h3>Enumerator (Field Data Collector)</h3>
+        <ul class="exp-bullets">
+          <li>Conducted 150+ interviews for a USAID peaceful dialogue initiative.</li>
+          <li>Collected qualitative data from university graduates with high accuracy.</li>
+          <li>Handled data entry and cleansing individually, punctually, and confidentially.</li>
+          <li>Conducted bilingual interviews in English and Amharic based on respondent needs.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-eyebrow">Portfolio</div>
+    <h2>Projects</h2>
+    <p class="section-desc">Hands-on work demonstrating my data analysis and research capabilities.</p>
+
+    <!-- COMPLETED PROJECT -->
+    <div style="margin-bottom: 3rem;">
+      <div class="project-card" style="border-radius: 16px; max-width: 100%;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <div class="project-num" style="margin-bottom:0;">01</div>
+          <div>
+            <div style="font-size:0.7rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.25rem;">Completed Project</div>
+            <h3 style="font-size:1.3rem; margin:0;">Household Food Security Assessment — Questionnaire Digitisation</h3>
+          </div>
+        </div>
+
+        <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.8; margin-bottom:1.5rem; max-width:80ch;">
+          End-to-end digitisation of a paper-based household food security survey. Starting from a printed field questionnaire, I manually entered responses into Excel, then built a fully digital XLSForm for KoboToolbox with skip logic, input constraints, consent management, and GPS capture — ready for mobile field deployment.
+        </p>
+
+        <div class="project-tags" style="margin-bottom:2rem;">
+          <span class="project-tag">KoboToolbox</span>
+          <span class="project-tag">XLSForm</span>
+          <span class="project-tag">Skip Logic</span>
+          <span class="project-tag">ODK</span>
+          <span class="project-tag">Excel</span>
+          <span class="project-tag">Field Research</span>
+        </div>
+
+        <!-- WORKFLOW STEPS -->
+        <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:0.75rem; margin-bottom:2rem; text-align:center;">
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">📄</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 1</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">Paper Questionnaire</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">📊</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 2</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">Manual Data Entry (Excel)</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">🗂️</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 3</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">XLSForm Design</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">📱</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 4</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">Live Digital Form</div>
+          </div>
+        </div>
+
+        <!-- SCREENSHOTS GRID -->
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:1rem;">Project Screenshots</div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_xlsform_excel.png" alt="XLSForm in Excel" style="width:100%; display:block; object-fit:cover; max-height:180px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">XLSForm — Survey Sheet</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Built in Excel with type, name, label, skip logic columns</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_xlsform_converted.png" alt="XLSForm validated" style="width:100%; display:block; object-fit:cover; max-height:180px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">XLSForm Online — Validated</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Form converted and validated via ODK XLSForm Online</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_preview_general.png" alt="Form preview" style="width:100%; display:block; object-fit:cover; max-height:180px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">Live Form — General Info</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Enumerator name, location, date, GPS capture rendered live</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_section_a.png" alt="Section A" style="width:100%; display:block; object-fit:cover; max-height:180px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">Section A — Respondent Info</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Region select with all Ethiopian regions as choices</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_skip_yes.png" alt="Skip logic Yes" style="width:100%; display:block; object-fit:cover; max-height:180px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">Skip Logic — C1 = Yes</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Meals/day appears; food challenge question is hidden</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_skip_no.png" alt="Skip logic No" style="width:100%; display:block; object-fit:cover; max-height:180px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">Skip Logic — C1 = No</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Food challenge question appears; meals/day is hidden</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLETED PROJECT 02 -->
+    <div style="margin-bottom: 3rem;">
+      <div class="project-card" style="border-radius: 16px; max-width: 100%;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <div class="project-num" style="margin-bottom:0;">02</div>
+          <div>
+            <div style="font-size:0.7rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.25rem;">Completed Project</div>
+            <h3 style="font-size:1.3rem; margin:0;">Competitive Landscape Analysis: Premium Dessert Retail Sector, Addis Ababa</h3>
+          </div>
+        </div>
+
+        <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.8; margin-bottom:1.5rem; max-width:80ch;">
+          A comprehensive competitive landscape analysis of 5 established ice cream and gelato businesses operating in Addis Ababa's premium dessert retail sector (Tutto Gelato, Cold Stone Creamery, IGLOO, Bacio Cremeria, and Embwa Creamery). Research was conducted through multiple online platforms including TripAdvisor, Instagram, Facebook, and Wanderlog. The analysis covers target customers, key offerings, pricing strategy, marketing channels, full SWOT analysis per competitor, identified market gaps, and strategic recommendations for a new market entrant.
+        </p>
+
+        <div class="project-tags" style="margin-bottom:2rem;">
+          <span class="project-tag">Market Research</span>
+          <span class="project-tag">Competitor Analysis</span>
+          <span class="project-tag">SWOT</span>
+          <span class="project-tag">Excel</span>
+          <span class="project-tag">Strategic Analysis</span>
+          <span class="project-tag">Addis Ababa</span>
+        </div>
+
+        <!-- Key findings -->
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:1rem;">Key Findings</div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem; margin-bottom:1.5rem;">
+          <div style="background:var(--accent-light); border-radius:10px; padding:1rem;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--serif);">5</div>
+            <div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.2rem;">Competitors Analysed</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:1rem;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--serif);">40–550 Br</div>
+            <div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.2rem;">Price Range Across Market</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:1rem;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--serif);">5</div>
+            <div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.2rem;">Market Gaps Identified</div>
+          </div>
+          <div style="background:#fdf0e8; border-radius:10px; padding:1rem;">
+            <div style="font-size:1rem; font-weight:600; color:var(--accent2); font-family:var(--serif);">Accessible Wellness</div>
+            <div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.2rem;">Recommended Positioning for New Entrant</div>
+          </div>
+        </div>
+
+        <div style="background:var(--bg); border-radius:10px; padding:1.25rem; border:1px solid var(--border);">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:0.75rem;">What the analysis covers</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;">
+            <div style="font-size:0.82rem; color:var(--ink-muted);">→ Target customers & general overview</div>
+            <div style="font-size:0.82rem; color:var(--ink-muted);">→ Products, pricing & pricing strategy</div>
+            <div style="font-size:0.82rem; color:var(--ink-muted);">→ Marketing channels & messaging</div>
+            <div style="font-size:0.82rem; color:var(--ink-muted);">→ Full SWOT for each competitor</div>
+            <div style="font-size:0.82rem; color:var(--ink-muted);">→ Market gap identification</div>
+            <div style="font-size:0.82rem; color:var(--ink-muted);">→ Strategic recommendations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLETED PROJECT 03 -->
+    <div style="margin-bottom: 3rem;">
+      <div class="project-card" style="border-radius: 16px; max-width: 100%;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <div class="project-num" style="margin-bottom:0;">03</div>
+          <div>
+            <div style="font-size:0.7rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.25rem;">Completed Project</div>
+            <h3 style="font-size:1.3rem; margin:0;">Ethiopia Retail Sales Dashboard — Power BI Data Cleaning & Visualisation</h3>
+          </div>
+        </div>
+
+        <p style="font-size:0.92rem; color:var(--ink-muted); line-height:1.8; margin-bottom:1.5rem; max-width:80ch;">
+          End-to-end data cleaning and dashboard creation using Power BI Desktop. Starting from a raw 120-record retail sales dataset containing intentional quality issues (missing values, negative prices, inconsistent date formats), I used Power Query Editor to clean and transform the data, then built an interactive dashboard with 4 visualisations and 3 KPI cards showing revenue, orders, and units sold across 5 Ethiopian regions.
+        </p>
+
+        <div class="project-tags" style="margin-bottom:2rem;">
+          <span class="project-tag">Power BI</span>
+          <span class="project-tag">Power Query</span>
+          <span class="project-tag">Data Cleaning</span>
+          <span class="project-tag">Dashboard</span>
+          <span class="project-tag">Data Visualisation</span>
+          <span class="project-tag">Excel</span>
+        </div>
+
+        <!-- Workflow steps -->
+        <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:0.75rem; margin-bottom:2rem; text-align:center;">
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">📊</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 1</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">Raw Excel Dataset</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">🔧</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 2</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">Power Query Cleaning</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">📈</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 3</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">4 Chart Visuals</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:0.75rem 0.5rem;">
+            <div style="font-size:1.2rem; margin-bottom:0.3rem;">🎯</div>
+            <div style="font-size:0.72rem; font-weight:600; color:var(--accent);">Step 4</div>
+            <div style="font-size:0.72rem; color:var(--ink-muted);">KPI Cards & Dashboard</div>
+          </div>
+        </div>
+
+        <!-- Key metrics -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:0.75rem; margin-bottom:2rem;">
+          <div style="background:var(--accent-light); border-radius:10px; padding:1rem; text-align:center;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--serif);">120</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">Records Cleaned</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:1rem; text-align:center;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--serif);">8</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">Cleaning Steps Applied</div>
+          </div>
+          <div style="background:var(--accent-light); border-radius:10px; padding:1rem; text-align:center;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent); font-family:var(--serif);">4</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">Chart Visualisations</div>
+          </div>
+          <div style="background:#fdf0e8; border-radius:10px; padding:1rem; text-align:center;">
+            <div style="font-size:1.4rem; font-weight:700; color:var(--accent2); font-family:var(--serif);">3M ETB</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">Total Revenue Tracked</div>
+          </div>
+        </div>
+
+        <!-- Screenshots -->
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); margin-bottom:1rem;">Project Screenshots</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_powerbi_query.png" alt="Power Query Editor" style="width:100%; display:block; object-fit:cover; max-height:220px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">Power Query Editor — Data Cleaning</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">8 Applied Steps: removed errors, filtered rows, standardised types, renamed columns</div>
+            </div>
+          </div>
+          <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+            <img src="ss_powerbi_dashboard.png" alt="Power BI Dashboard" style="width:100%; display:block; object-fit:cover; max-height:220px;">
+            <div style="padding:0.6rem 0.75rem; background:var(--bg);">
+              <div style="font-size:0.75rem; font-weight:600; color:var(--ink);">Final Dashboard — Ethiopia Retail Sales 2025</div>
+              <div style="font-size:0.7rem; color:var(--ink-muted);">Bar, line, donut & column charts + 3 KPI cards showing 3M ETB revenue, 118 orders, 1K units</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMING SOON PROJECTS -->
+    <div class="projects-grid">
+      <div class="project-card coming">
+        <div class="coming-badge">Coming soon</div>
+        <div class="project-num">04</div>
+        <h3>USAID Survey Data Analysis</h3>
+        <p>Mini field data analysis based on real interview experience — data cleaning, coding, and reporting of qualitative findings in SPSS.</p>
+        <div class="project-tags">
+          <span class="project-tag">SPSS</span>
+          <span class="project-tag">Data Cleaning</span>
+          <span class="project-tag">Field Research</span>
+        </div>
+      </div>
+
+      <div class="project-card coming">
+        <div class="coming-badge">Coming soon</div>
+        <div class="project-num">05</div>
+        <h3>Data Cleaning Case Study</h3>
+        <p>End-to-end cleaning of a messy public dataset — documenting every transformation step and presenting before/after comparisons.</p>
+        <div class="project-tags">
+          <span class="project-tag">Excel</span>
+          <span class="project-tag">STATA</span>
+          <span class="project-tag">Data Wrangling</span>
+        </div>
+      </div>
+
+      <div class="project-card coming">
+        <div class="coming-badge">Coming soon</div>
+        <div class="project-num">06</div>
+        <h3>Social Media Engagement Report</h3>
+        <p>Dashboard documenting the 85% engagement growth at AWWC — metrics, content analysis, and recommendations.</p>
+        <div class="project-tags">
+          <span class="project-tag">Google Sheets</span>
+          <span class="project-tag">Analytics</span>
+          <span class="project-tag">Reporting</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION & CERTS -->
+<section style="background: var(--bg-card); padding: 5rem 2rem;">
+  <div class="section-inner">
+    <div class="section-eyebrow">Credentials</div>
+    <h2>Education & Certifications</h2>
+    <p class="section-desc">Formal training in economics, data analytics, and digital marketing.</p>
+    <div class="cert-list">
+      <div class="cert-item">
+        <div class="cert-icon">🎓</div>
+        <div class="cert-info">
+          <h4>Bachelor of Arts in Economics</h4>
+          <p>Unity University, Addis Ababa · 2025</p>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">📊</div>
+        <div class="cert-info">
+          <h4>Data Analytics with Professional Development Skills</h4>
+          <p>ALX Data Analytics · September 2024</p>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-info">
+          <h4>Fundamentals of Digital Marketing</h4>
+          <p>Google Digital Garage · July 2023</p>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">📈</div>
+        <div class="cert-info">
+          <h4>Microsoft Excel: Business Intelligence w/ Power Query & DAX</h4>
+          <p>Udemy · Maven Analytics, Chris Dutton · June 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <div class="section-eyebrow" style="color: rgba(255,255,255,0.5);">Get in touch</div>
+    <h2>Let's Work Together</h2>
+    <p class="section-desc">Available for freelance projects on Upwork and direct contract work. Based in Addis Ababa, Ethiopia — open to remote engagements worldwide.</p>
+    <div class="contact-grid">
+      <a href="mailto:haymanotdegu438@gmail.com" class="contact-item">
+        <span>✉</span> haymanotdegu438@gmail.com
+      </a>
+      <a href="tel:+251927942271" class="contact-item">
+        <span>📞</span> +251 927 942 271
+      </a>
+      <a href="https://www.linkedin.com/in/haymanot-degu" class="contact-item" target="_blank">
+        <span>🔗</span> LinkedIn Profile
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Haymanot Degu Marew · Research & Data Specialist · Addis Ababa, Ethiopia
+</footer>
+
+</body>
+</html>
